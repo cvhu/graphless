@@ -11,3 +11,89 @@
  *= require_self
  *= require_tree .
  */
+
+ /* http://colorschemedesigner.com/#3p31TogE8wtwe */
+
+ body, html{
+ 	font-family: "Museo Sans","Lucida Grande",helvetica,Arial,sans-serif;
+	font-size: 14px;
+	padding: 0px;
+	margin: 0px;
+	height: 100%;
+	/*background-image: url('/assets/furley_bg.png');*/
+	background: #ffeedd;
+}
+
+#header {
+	width: 100%;
+	position: relative;
+	background: #ff5c3e;
+	height: 70px;
+	border-bottom: #ffa695 solid 2px;
+}
+
+#header #logo {
+	position: absolute;
+	top: 20%;
+	background-image: url('logo_white.png');
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	background-size: 150px auto;
+	height: 50px;
+	width: 150px;
+	display: block;
+}
+
+.container {
+	width: 1028px;
+	margin: 0px auto;
+}
+
+#header ul#navigation {
+	position: relative;
+	left: 170px;
+	padding: 0px;
+	margin: 0px;
+	text-decoration: none;
+}
+
+#header #navigation li {
+	padding: 20px 5px;
+	display: inline-block;
+	list-style: none;
+	line-height: 2em;
+	text-transform: uppercase;
+	font-size: 120%;
+}
+
+#header #navigation li a {
+	text-decoration: none;
+	color: #fff;
+	padding: 10px 20px;
+	border-radius: 10px;
+}
+
+#header #navigation li a:hover {
+	background: #ff8561;
+}
+
+.bordered-box {
+	background: #fff;
+	margin: 15px;
+	margin-left: 0px;
+	border: 1px solid #ffc8b7;
+}
+
+#page-summary {
+	vertical-align: top;
+	display: inline-block;
+	width: 330px;
+	min-height: 300px;
+}
+
+#page-content {
+	vertical-align: top;
+	display: inline-block;
+	width: 650px;
+	min-height: 400px;
+}
