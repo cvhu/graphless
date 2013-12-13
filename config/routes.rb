@@ -4,6 +4,6 @@ Graphless::Application.routes.draw do
   match '/login' => 'pages#login'
   match '/signup' => 'pages#signup'
 
-  match '/objects/new' => 'pages#newObject'
+  match '/api/users/signup' => 'users#signup'
 
 end
