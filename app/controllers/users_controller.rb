@@ -114,6 +114,23 @@ class UsersController < ApplicationController
 	end
 
 	def logout
+		obj = {}
+		obj[:status] = 'fail'
+		key_public = params[:key_public]
+		if key_public.nil?
+			obj[:message] = 'No user public key provided.'
+		else
+			user = User.find_by_key_public(key_public)
+			if user.nil?
+				obj[:message] = 'Invalid user public key.'
+			else
+				user.resetLogin
+				obj[:status] = 'success'
+			end
+		end
+		respond_to do |format|
+			format.json {render :json => obj.to_json}
+		end
 	end
 
 end

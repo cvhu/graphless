@@ -230,3 +230,62 @@ input[type='submit'].blue:hover {
 .error-field {
 	border: 1px solid #f00 !important;
 }
+
+
+/* User Menu */
+#user-nav{
+	background: #eee;
+	padding: 0px;
+	width: 170px;
+	border-right: 1px solid #aaa;
+	border-bottom: 1px solid #aaa;
+	border-left: 1px solid #aaa;
+	margin: 0px;
+	z-index: 999 !important;
+	position: absolute;
+}
+
+#user-nav li{
+	width: 100%;
+	list-style: none;
+}
+
+#user-nav a{
+	color: #aaa;
+	padding: 10px 15px;
+	display: block;
+}
+
+#user-nav a:hover{
+	background: #aaa;
+	color: #fff;
+	
+}
+
+a{
+	text-decoration: none;
+	transition-property: color;
+	-o-transition-property: color;
+	-moz-transition-property: color;
+	-webkit-transition-property: color;
+	transition-property: background;
+	-o-transition-property: background;
+	-moz-transition-property: background;
+	-webkit-transition-property: background;
+	transition-duration: 0.5s;
+	-o-transition-duration: 0.5s;
+	-moz-transition-duration: 0.5s;
+	-webkit-transition-duration: 0.5s;
+}
+
+a:hover{
+	transition-property: color;
+	-o-transition-property: color;
+	-moz-transition-property: color;
+	-webkit-transition-property: color;
+	
+	transition-duration: 0.5s;
+	-o-transition-duration: 0.5s;
+	-moz-transition-duration: 0.5s;
+	-webkit-transition-duration: 0.5s;
+}

@@ -94,14 +94,23 @@ var userBar = {
                 url: '/api/users/header?key_public=' + key_public,
                 dataType: 'json',
                 beforeSend: function() {
-                    $(userBar.button).html("");
+                    $(userBar.button).html('<i class="fa fa-refresh fa-spin"></i>');
                 },
                 success: function(obj) {
                     if (obj.status == 'success') {
-                        $(userBar.button).html(obj.fullname);
+                        if (window.location.pathname == '/login' || window.location.pathname == '/signup') {
+                            window.location = '/@' + obj.username
+                        }
+                        $(userBar.button).html(obj.fullname + ' <i class="fa fa-chevron-down"></i>');
                         $(userBar.button).click(function(e) {
                             e.preventDefault();
-
+                            if ($('#user-nav').length>0){
+                                $('#user-nav').slideUp('normal', function(){ $(this).remove();});
+                                $(userBar.button).html(obj.fullname + ' <i class="fa fa-chevron-down"></i>');
+                            }else{
+                                userBar.showMenu(obj);
+                                $(userBar.button).html(obj.fullname + ' <i class="fa fa-chevron-up"></i>');
+                            }
                         })
                     } else {
                         clearCookie();
@@ -110,7 +119,35 @@ var userBar = {
                 }
             })
         }
-	}
+	},
+    showMenu: function(obj) {
+        var root = $('<ul id="user-nav"></ul>');
+        $('<li></li>').html('<a id="user-nav-profile" href="/@' + obj.username + '">Profile</a>').appendTo(root);
+        var logout = $('<a href="#" id="signout-link">Log Out</a>');
+        $(logout).click(function(e){
+            e.preventDefault();
+            $.ajax({                
+                url: '/api/users/logout',
+                type: 'post',
+                data: {
+                    key_public: $.cookie('key_public')
+                },
+                dataType: 'json',
+                success: function(data){
+                    userBar.logout();
+                }
+            })
+        })
+        $('<li></li>').append(logout).appendTo(root);   
+        $(root).hide().insertAfter(userBar.button).slideDown();
+        var pos_x = $(userBar.button).position().left + $(userBar.button).width()/2 - $(root).width()/2;
+        var pos_y = $(userBar.button).position().top + $(userBar.button).height() + $(root).height() + 25;
+        $(root).css({top: pos_y, left: pos_x});
+    },
+    logout: function() {
+        clearCookie();
+        window.location = '/login';
+    }
 }
 
 $.fn.tooltip = function(message, type) {
