@@ -47,26 +47,31 @@
 .container {
 	width: 1028px;
 	margin: 0px auto;
+	height: 100%;
 }
 
 #header ul#navigation {
+	display: inline-block;
 	position: relative;
 	left: 170px;
 	padding: 0px;
 	margin: 0px;
+	height: 100%;
+	width: 850px;
 	text-decoration: none;
 }
 
 #header #navigation li {
-	padding: 20px 5px;
 	display: inline-block;
 	list-style: none;
-	line-height: 2em;
+	height: 100%;
 	text-transform: uppercase;
 	font-size: 120%;
 }
 
 #header #navigation li a {
+	position: relative;
+	top: 40%;
 	text-decoration: none;
 	color: #fff;
 	padding: 10px 20px;
@@ -77,10 +82,26 @@
 	background: #ff8561;
 }
 
+#header #user-button {
+	display: inline-block;
+	position: relative;
+	text-align: center;
+	margin: 0px;
+	right: 0px;
+	width: 170px;
+	height: 45px;
+	text-decoration: none;
+	color: #fff;
+	vertical-align: top;
+	padding-top: 25px;
+}
+
+#header #user-button:hover {
+	background: #ff8561;
+}
+
 .bordered-box {
 	background: #fff;
-	margin: 15px;
-	margin-left: 0px;
 	border: 1px solid #ffc8b7;
 }
 
@@ -89,6 +110,8 @@
 	display: inline-block;
 	width: 330px;
 	min-height: 300px;
+	margin: 15px;
+	margin-left: 0px;
 }
 
 #page-content {
@@ -96,4 +119,114 @@
 	display: inline-block;
 	width: 650px;
 	min-height: 400px;
+	margin: 15px;
+	margin-left: 0px;
+}
+
+
+/* Tooltip */
+
+.tooltip-wrapper {
+	position: absolute;
+	max-width: 200px;
+	line-height: 20px;
+	padding: 10px;
+	font-size: 14px;
+	text-align: center;
+	border-radius: 5px;
+}
+
+.tooltip-wrapper.white {
+	color: #777;
+    background: #fff;
+    border: 2px solid #aaa;
+    /*text-shadow: rgba(0, 0, 0, 0.0980392) 1px 1px 1px;
+    box-shadow: rgba(0, 0, 0, 0.0980392) 1px 1px 2px 0px;*/
+}
+
+.tooltip-wrapper:before {
+	content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-width: 5px;
+	border-style: solid;
+	bottom: 42px;
+	left: 50px;
+}
+
+.tooltip-wrapper.white:before {
+	border-color: transparent transparent #aaa transparent;
+}
+
+
+
+/* Form */
+
+form#signup, form#login {
+	width: 250px;
+	padding: 20px 40px;
+	margin: 50px auto;
+}
+
+.form-field {
+	position: relative;	
+	padding: 0px;
+	margin: 10px 0px;
+}
+
+.form-field label {
+	display: block;
+	font-weight: bold;
+	padding: 5px 0px;
+	font-size: 0.9em;
+}
+
+.form-field input[type='text'],input[type='password'] {
+	margin: 0px;
+	vertical-align: top;
+	display: inline-block;
+	font-size: 1.15em;
+	border: 1px solid #ccc;
+	padding: 5px 10px;
+}
+
+.form-field input[type='submit'] {
+	padding: 10px 15px;
+	width: 100%;
+	border: none;
+	border-radius: 5px;
+	font-size: 1.1em;
+	cursor: hand;
+	cursor: pointer;
+}
+
+input[type='submit'].blue {
+	background: #3299bb;
+	color: #fff;
+}
+
+input[type='submit'].blue:hover {
+	background: #64bfdd;
+}
+
+.form-field .full-length {
+	width: 230px;
+}
+
+.error-message {
+	color: #f00;
+	font-weight: bold;
+}
+
+.form-field .first-name {
+	width: 110px;
+}
+
+.form-field .last-name {
+	width: 91px;
+}
+
+.error-field {
+	border: 1px solid #f00 !important;
 }

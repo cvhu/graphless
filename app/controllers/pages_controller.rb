@@ -3,6 +3,9 @@ class PagesController < ApplicationController
 	def landing
 	end
 
-	def newObject
+	def login
+	end
+
+	def signup
 	end
 end

@@ -30,6 +30,13 @@ class User < ActiveRecord::Base
   	return "#{self.first_name.capitalize} #{self.last_name.capitalize}"
   end
 
+  def getWidgetData
+    return {
+      :username => username,
+      :fullname => getFullName
+    }
+  end
+
   def self.suggestUsername
     name = "#{self.first_name.capitalize}#{self.last_name.capitalize}"
     username = name

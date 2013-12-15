@@ -5,6 +5,7 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <%= yield :head %>
 </head>
 <body>
   
@@ -16,6 +17,7 @@
   			<li> <a href="#"> Apps </a> </li>
   			<li> <a href="#"> Profile </a> </li>
   		</ul>
+      <a href="/login" id="user-button">Log In</a>
   	</div>
   </div>
   <div class="container">

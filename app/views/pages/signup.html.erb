@@ -1,0 +1,72 @@
+<% content_for :head do%>
+	<script>
+		$(document).ready(function() {
+			$('input[name="email"]').blur(function(e) {
+				var email = $(this).val();
+				var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+				$(this).removeClass('error-field');
+  				$('#signup .error-message').html("").fadeOut();
+  				if (!regex.test(email)) {
+  					console.log("invalid email");
+  					$(this).addClass('error-field');
+  					$('#signup .error-message').html("Invalid email").fadeIn();
+  				} else {
+  					$('input[name="username"').val(email.substring(0, email.indexOf('@')));
+  				}
+			})
+			$("input[type='submit']").click(function(e) {
+				e.preventDefault();
+				var form = $('form#signup');
+				$.ajax({
+					type: "POST",
+					url: form.attr('action'),
+					data: form.serialize(),
+					success: function(obj) {
+						console.log(obj);
+						if (obj.status == 'success') {
+							updateCookie(obj);
+							window.location = '@' + $.cookie('username');
+						} else {
+							$('#signup .error-message').html(obj.message).fadeIn();
+						}
+					}, 
+					error: function(xhr, ajaxOptions, thrownError) {
+						console.log("error: " + xhr.responseText + thrownError + xhr);
+					}
+				})
+			})
+		})
+	</script>
+<% end %>
+
+<form action="/api/users/signup" id="signup" class="bordered-box">
+	<div class="form-field">
+		<label>Name</label>
+		<input type="text" name="first_name" placeholder="First name" class="first-name">
+		<input type="text" name="last_name" placeholder="Last name" class="last-name">
+	</div>
+	<div class="form-field">
+		<label>Email</label>
+		<input type="text" name="email" class="full-length">
+	</div>
+	<div class="form-field">
+		<label>Choose your username</label>
+		<input type="text" name="username" class="full-length">
+	</div>
+	<div class="form-field">
+		<label>Password</label>
+		<input type="password" name="password" class="full-length">
+	</div>
+	<div class="form-field">
+		<label>Password Confirmation</label>
+		<input type="password" name="password_confirmation" class="full-length">
+	</div>
+	<div class="form-field">
+		<div class="error-message" style="display: none;">
+			message
+		</div>
+	</div>
+	<div class="form-field">
+		<input type="submit" class="full-length blue" value="Create a New Account">
+	</div>
+</form>
