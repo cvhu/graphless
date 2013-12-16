@@ -337,6 +337,47 @@ $.fn.viewEvent = function(event_id) {
     })
 }
 
+$.fn.loadApps = function() {
+    var wrapper = this;
+    $.ajax({
+        type: 'GET',
+        url: '/api/apps/list.json?key_public=' + $.cookie('key_public'),
+        dataType: 'json',
+        beforeSend: function() {
+            $(wrapper).spinning();
+        },
+        success: function(obj) {
+            if (obj.status == 'success') {
+                $(wrapper).unspinning();
+                $(wrapper).loadNewAppForm();
+                $.each(obj.apps, function(i, v) {
+                    $(wrapper).addApp(v);
+                })
+            } else {
+                console.log(obj);
+            }
+        }
+    })
+    return wrapper;
+}
+
+$.fn.loadNewAppForm = function() {
+    var wrapper = this;
+    var add = $('<a href="/apps/new" class="app-box app-new"></a>').html('<i class="fa fa-plus fa-3x"></i>');
+    $(wrapper).append(add);
+    return wrapper;
+}
+
+$.fn.addApp = function(app) {
+    var wrapper = this;
+    var app_div = $('<a href="/apps/' + app.id + '" class="app-box"></a>').html(app.name).hide();
+    app_div.addClass('app');
+    app_div.insertAfter(wrapper.find('.app-new'));
+    $(app_div).fadeIn();
+    return wrapper;
+}
+
+
 $.fn.chooseModel = function(model_id) {
     var root = this;
     var wrapper = $('<div class="model-view bordered-box"></div>');

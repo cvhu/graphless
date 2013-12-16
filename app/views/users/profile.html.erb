@@ -1,11 +1,20 @@
+<% content_for :head do %>
+	<script>
+		$(document).ready(function() {
+			$('.apps').loadApps();
+		})
+	</script>
+<% end %>
+
 <div id="page-summary" class="bordered-box">
-	<%= @user.getFullName %>
+	<div class="title red"><%= @user.getFullName %></div>
 </div>
 
 <div id="page-content" class="bordered-box">
-	<a href="/apps/new" class="app-box app-new"> <i class="fa fa-plus fa-3x"></i> </a>
+	<div class="apps"></div>
+	<!-- <a href="/apps/new" class="app-box app-new"> <i class="fa fa-plus fa-3x"></i> </a>
 	<div class="app-box app"></div>
 	<div class="app-box app"> </div>
 	<div class="app-box app"></div>
-	<div class="app-box app"> </div>
+	<div class="app-box app"> </div> -->
 </div>

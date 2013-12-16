@@ -34,7 +34,7 @@ class EventsController < ApplicationController
 				obj[:message] = 'Invalid key_public'
 			else
 				obj[:status] = 'success'
-				events = user.events.order('created_at asc')
+				events = app.events.order('created_at asc')
 				unless params[:offset].nil?
 					events = events.offset(params[:offset].to_i)
 				end

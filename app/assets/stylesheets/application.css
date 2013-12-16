@@ -347,6 +347,12 @@ a:hover {
 
 /* App */
 
+#app-description {
+	color: #30a3b9;
+	margin-left: 10px;
+	font-size: 1.5em;
+}
+
 .app-box {
 	position: relative;
 	vertical-align: top;
@@ -358,8 +364,8 @@ a:hover {
 }
 
 .app-box.app-new {
-	color: #ffa695;
-	border: 5px dashed #ffa695;
+	color: #a42114;
+	border: 5px dashed #a42114;
 	height: 140px;
 	width: 140px;
 }
@@ -378,7 +384,16 @@ a:hover {
 .app-box.app {
 	height: 150px;
 	width: 150px;
-	background: #ffa695;
+	background: #a42114;
+	line-height: 150px;
+	color: #fff;
+	font-size: 1.5em;
+	text-align: center;
+	text-transform: capitalize;
+}
+
+.app-box.app:hover {
+	background: #ffc9a7;
 }
 
 /* Model */
@@ -492,6 +507,14 @@ a:hover {
 .title.blue {
 	font-weight: bold;
 	color: #30a3b9;
+	text-transform: capitalize;
+	font-size: 2.0em;
+	margin: 10px;
+}
+
+.title.red {
+	font-weight: bold;
+	color: #a42114;
 	text-transform: capitalize;
 	font-size: 2.0em;
 	margin: 10px;
