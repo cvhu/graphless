@@ -169,6 +169,13 @@ form#signup, form#login {
 	margin: 50px auto;
 }
 
+form#new-app {
+	width: 650px;
+	padding: 20px 40px;
+	margin: 50px auto;
+}
+
+
 .form-field {
 	position: relative;	
 	padding: 0px;
@@ -233,7 +240,7 @@ input[type='submit'].blue:hover {
 
 
 /* User Menu */
-#user-nav{
+#user-nav {
 	background: #eee;
 	padding: 0px;
 	width: 170px;
@@ -245,24 +252,24 @@ input[type='submit'].blue:hover {
 	position: absolute;
 }
 
-#user-nav li{
+#user-nav li {
 	width: 100%;
 	list-style: none;
 }
 
-#user-nav a{
+#user-nav a {
 	color: #aaa;
 	padding: 10px 15px;
 	display: block;
 }
 
-#user-nav a:hover{
+#user-nav a:hover {
 	background: #aaa;
 	color: #fff;
 	
 }
 
-a{
+a {
 	text-decoration: none;
 	transition-property: color;
 	-o-transition-property: color;
@@ -272,20 +279,53 @@ a{
 	-o-transition-property: background;
 	-moz-transition-property: background;
 	-webkit-transition-property: background;
+	transition-property: border-color;
+	-o-transition-property: border-color;
+	-moz-transition-property: border-color;
+	-webkit-transition-property: border-color;
 	transition-duration: 0.5s;
 	-o-transition-duration: 0.5s;
 	-moz-transition-duration: 0.5s;
 	-webkit-transition-duration: 0.5s;
 }
 
-a:hover{
-	transition-property: color;
-	-o-transition-property: color;
-	-moz-transition-property: color;
-	-webkit-transition-property: color;
+a:hover {
 	
-	transition-duration: 0.5s;
-	-o-transition-duration: 0.5s;
-	-moz-transition-duration: 0.5s;
-	-webkit-transition-duration: 0.5s;
+}
+
+
+/* App */
+
+.app-box {
+	position: relative;
+	vertical-align: top;
+	margin-left: 7px;
+	margin-top: 7px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	display: inline-block;
+}
+
+.app-box.app-new {
+	color: #ffa695;
+	border: 5px dashed #ffa695;
+	height: 140px;
+	width: 140px;
+}
+
+.app-box.app-new:hover {
+	border-color: #ffc9a7;
+	color: #ffc9a7;
+}
+
+.app-box.app-new i {
+	position: relative;
+	top: 55px;
+	left: 55px;
+}
+
+.app-box.app {
+	height: 150px;
+	width: 150px;
+	background: #ffa695;
 }

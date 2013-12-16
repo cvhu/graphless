@@ -12,4 +12,9 @@ Graphless::Application.routes.draw do
   match '/api/users/header' => 'users#header'
   match '/api/users/widget' => 'users#widget'
 
+  match '/apps/new' => 'apps#new'
+
+  match '/api/models/create' => 'models#create'
+
+  match '/api/events/create' => 'events#create'
 end

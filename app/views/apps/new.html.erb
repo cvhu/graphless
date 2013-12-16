@@ -1,0 +1,46 @@
+<% content_for :head do%>
+	<script>
+		$(document).ready(function() {
+			$("input[type='submit']").click(function(e) {
+				e.preventDefault();
+				var form = $('form#login');
+				$.ajax({
+					type: "POST",
+					url: form.attr('action'),
+					data: form.serialize(),
+					success: function(obj) {
+						console.log(obj);
+						if (obj.status == 'success') {
+							updateCookie(obj);
+							window.location = '@' + $.cookie('username');
+						} else {
+							$('#login .error-message').html(obj.message).fadeIn();
+						}
+					}, 
+					error: function(xhr, ajaxOptions, thrownError) {
+						console.log("error: " + xhr.responseText + thrownError + xhr);
+					}
+				})
+			})
+		})
+	</script>
+<% end %>
+
+<form action="/api/apps/create" id="new-app" class="bordered-box">
+	<div class="form-field">
+		<label>Name</label>
+		<input type="text" name="email" class="full-length">
+	</div>
+	<div class="form-field">
+		<label>Description</label>
+		<input type="password" name="password" class="full-length">
+	</div>
+	<div class="form-field">
+		<div class="error-message" style="display: none;">
+			message
+		</div>
+	</div>
+	<div class="form-field">
+		<input type="submit" class="full-length blue" value="Create App">
+	</div>
+</form>

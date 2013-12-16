@@ -5,3 +5,4 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Model.create([{name: 'string', data_type: 'string'}, {name: 'integer', data_type: 'integer'}, {name: 'float', data_type: 'float'}, {name: 'text', data_type: 'text'}, {name: 'currency', data_type: 'currency'}, {name: 'url', data_type: 'url'}])

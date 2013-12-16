@@ -11,7 +11,38 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131213050911) do
+ActiveRecord::Schema.define(:version => 20131216015748) do
+
+  create_table "apps", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "events", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "model_id"
+    t.integer  "app_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "mnodes", :force => true do |t|
+    t.integer  "app_id"
+    t.integer  "model_id"
+    t.integer  "parent_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "models", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.string   "data_type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email"
@@ -23,6 +54,18 @@ ActiveRecord::Schema.define(:version => 20131213050911) do
     t.string   "key_public"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+  end
+
+  create_table "values", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "app_id"
+    t.integer  "model_id"
+    t.integer  "event_id"
+    t.integer  "mnode_id"
+    t.string   "data_type"
+    t.string   "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end
