@@ -188,29 +188,66 @@ $.fn.loadModels = function() {
 $.fn.addModel = function(model) {
     models.push(model);
     var wrapper = this;
-    var model_div = $('<a href="#" class="model-box"></a>').html(model.name).hide();
-    if (model.user == null) {
-        model_div.addClass('model-default');
-        model_div.attr('href', null);
-    } else {
+    if (model.user != null) {
+        var model_div = $('<a href="#" class="model-box"></a>').html(model.name).hide();
         model_div.addClass('model');
         $(model_div).click(function(e) {
             e.preventDefault();
-            viewModel(model.id);
+            model_div.viewModel(model.id);
         })
+        model_div.insertAfter(wrapper.find('.model-new'));
+        $(model_div).fadeIn();
+    } else {
+        // model_div.addClass('model-default');
+        // model_div.attr('href', null);
     }
-    model_div.insertAfter(wrapper.find('.model-new'));
-    $(model_div).fadeIn();
     return wrapper;
 }
 
-function viewModel(model_id) {
-    var wrapper = $('<div class="model-view"></div>');
+$.fn.viewModel = function(model_id) {
+    var root = this;
+    var wrapper = $('<div class="model-view bordered-box"></div>');
     $.ajax({
         type: 'GET',
-        url: '/api/'
+        url: '/api/models/view.json?model_id=' + model_id,
+        dataType: 'json',
+        beforeSend: function() {
+            wrapper.spinning();
+        },
+        success: function(obj) {
+            wrapper.unspinning();
+            // $('<div class="model-name"></div>').html(obj.model.name).appendTo(wrapper);
+            var ul = $('<ul></ul>').appendTo(wrapper);
+            ul.buildMnodes(-1, obj.model.mnodes);
+            var buttonsDiv = $('<div class="form-field"></div>').appendTo(wrapper);
+            var chooseButton = $('<a href="#" class="half-length blue button"></a>').html('Choose').appendTo(buttonsDiv);
+            $(chooseButton).click(function(e) {
+                e.preventDefault();
+                $('.model-box.model .fa-check-circle').remove();
+                root.append($('<i class="fa fa-check-circle fa-lg"></i>'));
+                $('#chosen-model').html(obj.model.name);
+                $('input[name="model_id"]').val(model_id);
+                dismissLightBox();
+            })
+            var cancelButton = $('<a href="#" class="half-length red button"></a>').html('Cancel').appendTo(buttonsDiv);
+            $(cancelButton).click(function(e) {
+                e.preventDefault();
+                dismissLightBox();
+            })
+            wrapper.launchLightBox();
+        }
     })
-    wrapper.launchLightBox();
+}
+
+$.fn.buildMnodes = function(parent_id, mnodes) {
+    var wrapper = this;
+    $.each(mnodes, function(i, v) {
+        if (v.parent_id == parent_id) {
+            var li = $('<li></li>').html('<span>'+v.name+'</span>(' + v.data_type + ')').appendTo(wrapper);
+            var ul = $('<ul></ul>').appendTo(li);
+            ul.buildMnodes(v.id, mnodes);
+        }
+    })
 }
 
 $.fn.loadNewModelForm = function() {

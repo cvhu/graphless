@@ -4,7 +4,9 @@
 			$('#new-app .models').loadModels();
 			$("input[type='submit']").click(function(e) {
 				e.preventDefault();
-				var form = $('form#login');
+				$('input[name="key_public').val($.cookie('key_public'));
+				var form = $('form#new-app');
+				console.log(form.serialize());
 				$.ajax({
 					type: "POST",
 					url: form.attr('action'),
@@ -12,10 +14,9 @@
 					success: function(obj) {
 						console.log(obj);
 						if (obj.status == 'success') {
-							updateCookie(obj);
-							window.location = '@' + $.cookie('username');
+							window.location = '/apps/' + obj.app.id;
 						} else {
-							$('#login .error-message').html(obj.message).fadeIn();
+							$('#new-app .error-message').html(obj.message).fadeIn();
 						}
 					}, 
 					error: function(xhr, ajaxOptions, thrownError) {
@@ -28,13 +29,14 @@
 <% end %>
 
 <form action="/api/apps/create" id="new-app" class="bordered-box">
+	<input type="hidden" name="key_public">
 	<div class="form-field">
 		<label>Name</label>
-		<input type="text" name="email" class="full-length">
+		<input type="text" name="name" class="full-length">
 	</div>
 	<div class="form-field">
 		<label>Description</label>
-		<input type="password" name="password" class="full-length">
+		<input type="text" name="description" class="full-length">
 	</div>
 	<div class="form-field">
 		<div class="error-message" style="display: none;">
@@ -42,7 +44,8 @@
 		</div>
 	</div>
 	<div class="form-field">
-		<label>Choose a model</label>
+		<label>Choose a model: <span id="chosen-model"></span></label>
+		<input type="hidden" name="model_id">
 		<div class="models">
 		</div>
 	</div>

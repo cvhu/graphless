@@ -13,6 +13,7 @@ Graphless::Application.routes.draw do
   match '/api/users/widget' => 'users#widget'
 
   match '/apps/new' => 'apps#new'
+  match '/apps/:id' => 'apps#profile'
   match '/api/apps/create' => 'apps#create'
   match '/api/apps/list' => 'apps#list'
 

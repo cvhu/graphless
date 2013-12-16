@@ -248,6 +248,16 @@ input[type='submit'].blue:hover {
 	background: #64bfdd;
 }
 
+a.blue {
+	background: #3299bb;
+	color: #fff;
+}
+
+a.blue:hover {
+	background: #64bfdd;
+}
+
+
 a.red {
 	background: #ff5031;
 	color: #fff;
@@ -432,10 +442,19 @@ a:hover {
 	margin-bottom: 15px;
 }
 
+.model-view {
+	max-height: 500px;
+	overflow: auto;
+}
+
+.model-box.model .fa-check-circle {
+	color: #a42114;
+	margin-left: 5px;
+}
 /* Light Box */
 
 #black-overlay {
-	position: absolute;
+	position: fixed;
 	top: 0px;
 	left: 0px;
 	width: 100%;

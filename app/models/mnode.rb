@@ -16,7 +16,7 @@ class Mnode < ActiveRecord::Base
   end
 
   def createMnodes(parentMnode)
-  	mnodes = Mnode.where(:parent_id => parentMnode.id)
+  	mnodes = Mnode.where(:parent_id => id)
   	mnodes.each do |mnode|
   		newMnode = Mnode.create(model_id: parentMnode.model_id, parent_id: parentMnode.id, name: mnode.name, data_type: mnode.data_type)
   		mnode.createMnodes(newMnode)

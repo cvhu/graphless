@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131216065149) do
+ActiveRecord::Schema.define(:version => 20131216074340) do
 
   create_table "app_models", :force => true do |t|
     t.integer  "app_id"
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(:version => 20131216065149) do
   end
 
   create_table "mnodes", :force => true do |t|
-    t.integer  "app_id"
     t.integer  "model_id"
     t.integer  "parent_id"
     t.datetime "created_at", :null => false

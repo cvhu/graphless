@@ -1,5 +1,8 @@
 class AppsController < ApplicationController
 
+	def profile
+	end
+
 	def new
 	end
 
