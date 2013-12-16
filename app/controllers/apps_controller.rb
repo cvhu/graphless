@@ -1,6 +1,8 @@
 class AppsController < ApplicationController
 
 	def profile
+		@app = App.find(params[:id])
+		@model = @app.models.first
 	end
 
 	def new

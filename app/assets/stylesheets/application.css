@@ -119,7 +119,7 @@
 	vertical-align: top;
 	display: inline-block;
 	width: 650px;
-	min-height: 400px;
+	min-height: 320px;
 	margin: 15px;
 	margin-left: 0px;
 }
@@ -170,13 +170,13 @@ form#signup, form#login {
 	margin: 50px auto;
 }
 
-form#new-app, form#new-model {
+form#new-app, form#new-model, .model-view {
 	width: 650px;
 	padding: 20px 40px;
 	margin: 50px auto;
 }
 
-#new-model .form-field .half-length {
+.form-field .half-length {
 	width: 230px;
 	margin-right: 15px;
 }
@@ -231,13 +231,13 @@ form#new-app, form#new-model {
 
 .form-field input[type='submit'], .button {
 	padding: 10px 15px;
-	width: 100%;
 	border: none;
 	border-radius: 5px;
 	font-size: 1.1em;
 	cursor: hand;
 	cursor: pointer;
 }
+
 
 input[type='submit'].blue {
 	background: #3299bb;
@@ -451,6 +451,52 @@ a:hover {
 	color: #a42114;
 	margin-left: 5px;
 }
+
+
+/* Event */
+
+.event-box {
+	position: relative;
+	vertical-align: top;
+	margin-left: 7px;
+	margin-top: 7px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	display: inline-block;
+}
+
+.event-box.event-new {
+	color: #30a3b9;
+	border: 5px dashed #30a3b9;
+	height: 140px;
+	width: 140px;
+}
+
+.event-box.event-new:hover {
+	border-color: #62c9dc;
+	color: #62c9dc;
+}
+
+.event-box.event-new i {
+	position: relative;
+	top: 55px;
+	left: 55px;
+}
+
+.event-box.event {
+	height: 150px;
+	width: 150px;
+	background: #30a3b9;
+}
+
+.title.blue {
+	font-weight: bold;
+	color: #30a3b9;
+	text-transform: capitalize;
+	font-size: 2.0em;
+	margin: 10px;
+}
+
 /* Light Box */
 
 #black-overlay {

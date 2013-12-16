@@ -185,6 +185,17 @@ $.fn.loadModels = function() {
     return wrapper;
 }
 
+$.fn.loadNewModelForm = function() {
+    var wrapper = this;
+    var add = $('<a href="#" class="model-box model-new"></a>').html('<i class="fa fa-plus fa-3x"></i>');
+    $(add).click(function(e) {
+        e.preventDefault();
+        wrapper.editModel();
+    })
+    $(wrapper).append(add);
+    return wrapper;
+}
+
 $.fn.addModel = function(model) {
     models.push(model);
     var wrapper = this;
@@ -193,7 +204,7 @@ $.fn.addModel = function(model) {
         model_div.addClass('model');
         $(model_div).click(function(e) {
             e.preventDefault();
-            model_div.viewModel(model.id);
+            model_div.chooseModel(model.id);
         })
         model_div.insertAfter(wrapper.find('.model-new'));
         $(model_div).fadeIn();
@@ -204,7 +215,129 @@ $.fn.addModel = function(model) {
     return wrapper;
 }
 
-$.fn.viewModel = function(model_id) {
+$.fn.loadEvents = function() {
+    var wrapper = this;
+    $.ajax({
+        type: 'GET',
+        url: '/api/events/list.json?key_public=' + $.cookie('key_public') + '&app_id=' + $('#app').attr('app_id'),
+        dataType: 'json',
+        beforeSend: function() {
+            $(wrapper).spinning();
+        },
+        success: function(obj) {
+            if (obj.status == 'success') {
+                $(wrapper).unspinning();
+                $(wrapper).loadNewEventForm();
+                $.each(obj.events, function(i, v) {
+                    $(wrapper).addEvent(v);
+                })
+            } else {
+                console.log(obj);
+            }
+        }
+    })
+    return wrapper;
+}
+
+$.fn.loadNewEventForm = function() {
+    var wrapper = this;
+    var add = $('<a href="#" class="event-box event-new"></a>').html('<i class="fa fa-plus fa-3x"></i>');
+    $(add).click(function(e) {
+        e.preventDefault();
+        wrapper.createEvent($('#model').attr('model_id'));
+    })
+    $(wrapper).append(add);
+    return wrapper;
+}
+
+$.fn.addEvent = function(event_obj) {
+    var wrapper = this;
+    var event_div = $('<a href="#" class="event-box"></a>').hide();
+    event_div.addClass('event');
+    $(event_div).click(function(e) {
+        e.preventDefault();
+        event_div.viewEvent(event_obj.id);
+    })
+    event_div.insertAfter(wrapper.find('.event-new'));
+    $(event_div).fadeIn();
+    return wrapper;
+}
+
+$.fn.createEvent = function(model_id) {
+    var root = this;
+    var wrapper = $('<div class="model-view bordered-box"></div>');
+    $.ajax({
+        type: 'GET',
+        url: '/api/models/view.json?model_id=' + model_id,
+        dataType: 'json',
+        beforeSend: function() {
+            wrapper.spinning();
+        },
+        success: function(obj) {
+            wrapper.unspinning();
+            // $('<div class="model-name"></div>').html(obj.model.name).appendTo(wrapper);
+            var form = $('<form action="/api/events/create.json"></form>').appendTo(wrapper);
+            var ul = $('<ul></ul>').appendTo(form);
+            ul.buildMnodes(-1, obj, 'add-event');
+            $('<input type="hidden" name="key_public">').val($.cookie('key_public')).appendTo(form);
+            $('<input type="hidden" name="app_id">').val($('#app').attr('app_id')).appendTo(form);
+            $('<input type="hidden" name="model_id">').val($('#model').attr('model_id')).appendTo(form);
+            var buttonsDiv = $('<div class="form-field"></div>').appendTo(wrapper);
+            var addButton = $('<input type="submit" class="half-length blue button" value="Add Event">').appendTo(buttonsDiv);
+            $(addButton).click(function(e) {
+                e.preventDefault();
+                console.log(form.serialize());
+                $.ajax({
+                    type: 'POST',
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    beforeSend: function() {
+                        addButton.spinning();
+                    },
+                    success: function(obj) {
+                        addButton.unspinning();
+                        dismissLightBox();
+                        root.addEvent(obj.event);
+                    }
+                })
+            })
+            var cancelButton = $('<a href="#" class="half-length red button"></a>').html('Cancel').appendTo(buttonsDiv);
+            $(cancelButton).click(function(e) {
+                e.preventDefault();
+                dismissLightBox();
+            })
+            wrapper.launchLightBox();
+        }
+    })
+}
+
+
+$.fn.viewEvent = function(event_id) {
+    var root = this;
+    var wrapper = $('<div class="model-view bordered-box"></div>');
+    $.ajax({
+        type: 'GET',
+        url: '/api/events/view.json?event_id=' + event_id,
+        dataType: 'json',
+        beforeSend: function() {
+            wrapper.spinning();
+        },
+        success: function(obj) {
+            wrapper.unspinning();
+            var ul = $('<ul></ul>').appendTo(wrapper);
+            ul.buildMnodes(-1, obj, 'view-event');
+            var buttonsDiv = $('<div class="form-field"></div>').appendTo(wrapper);
+            var okayButton = $('<a href="#" class="half-length blue button"></a>').html('Okay').appendTo(buttonsDiv);
+            $(okayButton).click(function(e) {
+                e.preventDefault();
+                dismissLightBox();
+            })
+            wrapper.launchLightBox();
+        }
+    })
+}
+
+$.fn.chooseModel = function(model_id) {
     var root = this;
     var wrapper = $('<div class="model-view bordered-box"></div>');
     $.ajax({
@@ -218,7 +351,7 @@ $.fn.viewModel = function(model_id) {
             wrapper.unspinning();
             // $('<div class="model-name"></div>').html(obj.model.name).appendTo(wrapper);
             var ul = $('<ul></ul>').appendTo(wrapper);
-            ul.buildMnodes(-1, obj.model.mnodes);
+            ul.buildMnodes(-1, obj, 'choose');
             var buttonsDiv = $('<div class="form-field"></div>').appendTo(wrapper);
             var chooseButton = $('<a href="#" class="half-length blue button"></a>').html('Choose').appendTo(buttonsDiv);
             $(chooseButton).click(function(e) {
@@ -239,26 +372,45 @@ $.fn.viewModel = function(model_id) {
     })
 }
 
-$.fn.buildMnodes = function(parent_id, mnodes) {
+$.fn.buildMnodes = function(parent_id, obj, mode) {
     var wrapper = this;
+    if (mode == 'view-event') {
+        mnodes = obj.event.mnodes;
+    } else {
+        mnodes = obj.model.mnodes;
+    }
     $.each(mnodes, function(i, v) {
         if (v.parent_id == parent_id) {
-            var li = $('<li></li>').html('<span>'+v.name+'</span>(' + v.data_type + ')').appendTo(wrapper);
+            var li = $('<li></li>').appendTo(wrapper);
+            var field = $('<div class="form-field"></div>').appendTo(li);
+            var label = $('<label></label>').html(v.name + '(' + v.data_type + ')').appendTo(field);
+            if (v.data_type != 'compound') {
+                console.log('! compount' + mode);
+                if (mode == 'add-event') {
+                    console.log('text');
+                    $('<input type="text" name="contents[]">').appendTo(field);
+                    $('<input type="hidden" name="mnodes[]">').val(v.id).appendTo(field);
+                } else if (mode == 'view-event') {
+                    var value_content = getValue(obj.event.values, v.id);
+                    console.log('view-event ' + value_content);
+                    $('<input type="text" disabled>').val(value_content).appendTo(field);
+                }
+            }
             var ul = $('<ul></ul>').appendTo(li);
-            ul.buildMnodes(v.id, mnodes);
+            ul.buildMnodes(v.id, obj, mode);
         }
     })
 }
 
-$.fn.loadNewModelForm = function() {
-    var wrapper = this;
-    var add = $('<a href="#" class="model-box model-new"></a>').html('<i class="fa fa-plus fa-3x"></i>');
-    $(add).click(function(e) {
-        e.preventDefault();
-        wrapper.editModel();
+function getValue(values, mnode_id) {
+    var content = '';
+    $.each(values, function(i, v) {
+        if (v.mnode_id == mnode_id) {
+            // console.log('values: ' + v.mnode_id +' mnode_id: ' + mnode_id);
+            content = v.content;
+        }
     })
-    $(wrapper).append(add);
-    return wrapper;
+    return content;
 }
 
 $.fn.editModel = function() {

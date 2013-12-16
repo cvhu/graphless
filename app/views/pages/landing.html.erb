@@ -1,0 +1,7 @@
+<script>
+	$(document).ready(function() {
+		if ($.cookie('key_public') != null) {
+			window.location = '/@' + $.cookie('username');
+		}
+	})
+</script>

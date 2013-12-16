@@ -6,5 +6,13 @@ class Value < ActiveRecord::Base
   belongs_to :model
   belongs_to :mnode
   belongs_to :event
+
+  def widget
+  	return {
+  		id: id,
+  		mnode_id: mnode_id,
+  		content: content
+  	}
+  end
   
 end

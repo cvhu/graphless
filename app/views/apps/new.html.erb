@@ -4,7 +4,7 @@
 			$('#new-app .models').loadModels();
 			$("input[type='submit']").click(function(e) {
 				e.preventDefault();
-				$('input[name="key_public').val($.cookie('key_public'));
+				$('input[name="key_public"]').val($.cookie('key_public'));
 				var form = $('form#new-app');
 				console.log(form.serialize());
 				$.ajax({

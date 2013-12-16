@@ -24,4 +24,6 @@ Graphless::Application.routes.draw do
   match '/api/mnodes/create' => 'mnodes#create'
 
   match '/api/events/create' => 'events#create'
+  match '/api/events/list' => 'events#list'
+  match '/api/events/view' => 'events#view'
 end

@@ -1,11 +1,21 @@
+<% content_for :head do %>
+	<script>
+		$(document).ready(function() {
+			$('.events').loadEvents();
+		})
+	</script>
+<% end %>
+
 <div id="page-summary" class="bordered-box">
-	
+	<div id="app" class="blue title" app_id="<%= @app.id %>"><%= @app.name %></div>
+	<div id="model" class="blue title" model_id="<%= @model.id %>"><%= "(#{@model.name})" %></div>
 </div>
 
 <div id="page-content" class="bordered-box">
-	<a href="/apps/new" class="app-box app-new"> <i class="fa fa-plus fa-3x"></i> </a>
-	<div class="app-box app"></div>
-	<div class="app-box app"> </div>
-	<div class="app-box app"></div>
-	<div class="app-box app"> </div>
+	<div class="events"></div>
+	<!-- <a href="/events/new" class="event-box event-new"> <i class="fa fa-plus fa-3x"></i> </a>
+	<div class="event-box event"></div>
+	<div class="event-box event"> </div>
+	<div class="event-box event"></div>
+	<div class="event-box event"> </div> -->
 </div>
