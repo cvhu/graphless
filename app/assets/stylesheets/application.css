@@ -13,6 +13,7 @@
  */
 
  /* http://colorschemedesigner.com/#3p31TogE8wtwe */
+ /* http://colorschemedesigner.com/#0431TogE8wtwe */
 
  body, html{
  	font-family: "Museo Sans","Lucida Grande",helvetica,Arial,sans-serif;
@@ -169,10 +170,15 @@ form#signup, form#login {
 	margin: 50px auto;
 }
 
-form#new-app {
+form#new-app, form#new-model {
 	width: 650px;
 	padding: 20px 40px;
 	margin: 50px auto;
+}
+
+#new-model .form-field .half-length {
+	width: 230px;
+	margin-right: 15px;
 }
 
 
@@ -189,7 +195,7 @@ form#new-app {
 	font-size: 0.9em;
 }
 
-.form-field input[type='text'],input[type='password'] {
+.form-field input[type='text'],input[type='password'],select{
 	margin: 0px;
 	vertical-align: top;
 	display: inline-block;
@@ -198,7 +204,32 @@ form#new-app {
 	padding: 5px 10px;
 }
 
-.form-field input[type='submit'] {
+.form-field select {
+	margin-top: 3px;
+	margin-left: 7px;
+}
+
+.form-field .add {
+	color: #8db44e;
+	margin-top: 5px;
+	margin-left: 8px;
+}
+
+.form-field .add:hover {
+	color: #c2f86b;
+}
+
+.form-field .remove {
+	color: #ff7c6e;
+	margin-top: 5px;
+	margin-left: 3px;
+}
+
+.form-field .remove:hover {
+	color: #ff9f95;
+}
+
+.form-field input[type='submit'], .button {
 	padding: 10px 15px;
 	width: 100%;
 	border: none;
@@ -216,6 +247,16 @@ input[type='submit'].blue {
 input[type='submit'].blue:hover {
 	background: #64bfdd;
 }
+
+a.red {
+	background: #ff5031;
+	color: #fff;
+}
+
+a.red:hover {
+	background: #ff7c61;
+}
+
 
 .form-field .full-length {
 	width: 230px;
@@ -328,4 +369,86 @@ a:hover {
 	height: 150px;
 	width: 150px;
 	background: #ffa695;
+}
+
+/* Model */
+
+.model-box {
+	vertical-align: top;
+	margin-left: 7px;
+	margin-top: 7px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	display: inline-block;
+}
+
+.model-box.model-new {
+	color: #8db44e;
+	border: 5px dashed #8db44e;
+	height: 140px;
+	width: 140px;
+}
+
+.model-box.model-new:hover {
+	border-color: #c2f86b;
+	color: #c2f86b;
+}
+
+.model-box.model-new i {
+	position: relative;
+	top: 55px;
+	left: 55px;
+}
+
+.model-box.model {
+	height: 150px;
+	width: 150px;
+	font-size: 1.1em;
+	color: #fff;
+	text-align: center;
+	text-transform: capitalize;
+	line-height: 150px;
+	position: relative;
+	background: #8db44e;
+}
+
+.model-box.model-default {
+	height: 150px;
+	width: 150px;
+	font-size: 1.1em;
+	color: #fff;
+	text-align: center;
+	text-transform: capitalize;
+	line-height: 150px;
+	position: relative;
+	background: #679b13;
+}
+
+.model-box.model:hover {
+	background: #c2f86b;
+}
+
+.model-edit .model-property {
+	margin-bottom: 15px;
+}
+
+/* Light Box */
+
+#black-overlay {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index: 1001;
+	opacity: 0.8;
+	-moz-opacity: 0.8;
+	filter: alpha(opacity=80);
+}
+
+#white-overlay {
+	z-index: 1002;
+	overflow: auto;
+	position: absolute;
 }

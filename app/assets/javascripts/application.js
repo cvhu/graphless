@@ -94,7 +94,7 @@ var userBar = {
                 url: '/api/users/header?key_public=' + key_public,
                 dataType: 'json',
                 beforeSend: function() {
-                    $(userBar.button).html('<i class="fa fa-refresh fa-spin"></i>');
+                    $(userBar.button).spinning();
                 },
                 success: function(obj) {
                     if (obj.status == 'success') {
@@ -157,4 +157,148 @@ $.fn.tooltip = function(message, type) {
 	var pos_y = $(this).position().top + $(this).height() + $(wrapper).height() + 15;
 	$(wrapper).css({top: pos_y, left: pos_x}).delay(500).fadeIn('slow');
 	return wrapper;
+}
+
+var models = [];
+
+$.fn.loadModels = function() {
+    var wrapper = this;
+    $.ajax({
+        type: 'GET',
+        url: '/api/models/list.json?key_public=' + $.cookie('key_public'),
+        dataType: 'json',
+        beforeSend: function() {
+            $(wrapper).spinning();
+        },
+        success: function(obj) {
+            if (obj.status == 'success') {
+                $(wrapper).unspinning();
+                $(wrapper).loadNewModelForm();
+                $.each(obj.models, function(i, v) {
+                    $(wrapper).addModel(v);
+                })
+            } else {
+                console.log(obj);
+            }
+        }
+    })
+    return wrapper;
+}
+
+$.fn.addModel = function(model) {
+    models.push(model);
+    var wrapper = this;
+    var model_div = $('<a href="#" class="model-box"></a>').html(model.name).hide();
+    if (model.user == null) {
+        model_div.addClass('model-default');
+        model_div.attr('href', null);
+    } else {
+        model_div.addClass('model');
+        $(model_div).click(function(e) {
+            e.preventDefault();
+            viewModel(model.id);
+        })
+    }
+    model_div.insertAfter(wrapper.find('.model-new'));
+    $(model_div).fadeIn();
+    return wrapper;
+}
+
+function viewModel(model_id) {
+    var wrapper = $('<div class="model-view"></div>');
+    $.ajax({
+        type: 'GET',
+        url: '/api/'
+    })
+    wrapper.launchLightBox();
+}
+
+$.fn.loadNewModelForm = function() {
+    var wrapper = this;
+    var add = $('<a href="#" class="model-box model-new"></a>').html('<i class="fa fa-plus fa-3x"></i>');
+    $(add).click(function(e) {
+        e.preventDefault();
+        wrapper.editModel();
+    })
+    $(wrapper).append(add);
+    return wrapper;
+}
+
+$.fn.editModel = function() {
+    var root = this;
+    var wrapper = $('<div class="model-edit"></div>');
+    var form = $('<form action="/api/models/create.json" id="new-model" class="bordered-box"></form>').appendTo(wrapper);
+    var nameField = $('<div class="form-field"></div>').html('<label>Name</label><input type="text" name="name" class="full-length">').appendTo(form);
+    var propertiesField = $('<div class="form-field"></div>').html('<label>Properties</label>').appendTo(form);
+    propertiesField.addModelSelection();
+    var keyPublic = $('<input name="key_public" type="hidden">').val($.cookie('key_public')).appendTo(form);
+    var buttonsDiv = $('<div class="form-field"></div>').appendTo(form);
+    var saveButton = $('<input type="submit" class="half-length blue button" value="Save">').appendTo(buttonsDiv);
+    $(saveButton).click(function(e) {
+        e.preventDefault();
+        console.log(form.serialize());
+        $.ajax({
+            type: 'POST',
+            url: form.attr('action'),
+            data: form.serialize(),
+            beforeSend: function() {
+                saveButton.spinning();
+            },
+            success: function(obj) {
+                saveButton.unspinning();
+                dismissLightBox();
+                root.addModel(obj.model);
+            }
+        })
+    })
+    var cancelButton = $('<a href="#" class="half-length red button"></a>').html('Cancel').appendTo(buttonsDiv);
+    $(cancelButton).click(function(e) {
+        e.preventDefault();
+        dismissLightBox();
+    })
+    $(wrapper).launchLightBox();
+}
+
+$.fn.addModelSelection = function() {
+    var wrapper = this;
+    var property = $('<div class="model-property"></div>').hide().appendTo(wrapper).fadeIn();
+    $('<input type="text" name="property_names[]" placeholder="property name" class="full-length">').appendTo(property);
+    var selection = $('<select name="property_models[]" class="models"></select>').appendTo(property);
+    $.each(models, function(i, model) {
+        $('<option></option>').val(model.id).html(model.name).appendTo(selection);
+    })
+    var add = $('<a href="#" class="add"></a>').html('<i class="fa fa-plus-square fa-2x"></i>').appendTo(property);
+    $(add).click(function(e) {
+        e.preventDefault();
+        $(wrapper).addModelSelection(models);
+    });
+    if ($(wrapper).find('.model-property').length > 1) {
+        var remove = $('<a href="#" class="remove"></a>').html('<i class="fa fa-minus-square fa-2x"></i>').appendTo(property);
+        $(remove).click(function(e) {
+            e.preventDefault();
+            $(property).remove();
+        });
+    }
+    return this;
+}
+
+$.fn.launchLightBox = function() {
+    var blackBox = $('<div id="black-overlay"></div>').hide().appendTo('body').fadeIn();
+    var lightBox = $('<div id="white-overlay"></div>').append(this).appendTo('body');
+    var pos_x = $(blackBox).width()/2 - $(lightBox).width()/2;
+    var pos_y = $(blackBox).height()/2 - $(lightBox).height()/2;
+    $(lightBox).css({top: pos_y, left: pos_x});
+}
+
+function dismissLightBox() {
+    $('#white-overlay').remove();
+    $('#black-overlay').remove();
+}
+
+$.fn.spinning = function() {
+    $(this).html('<i class="fa fa-refresh fa-spin" style="text-align: center;"></i>');
+}
+
+$.fn.unspinning = function() {
+    $(this).find('.fa-spin').first().remove();
 }

@@ -1,6 +1,7 @@
 <% content_for :head do%>
 	<script>
 		$(document).ready(function() {
+			$('#new-app .models').loadModels();
 			$("input[type='submit']").click(function(e) {
 				e.preventDefault();
 				var form = $('form#login');
@@ -38,6 +39,11 @@
 	<div class="form-field">
 		<div class="error-message" style="display: none;">
 			message
+		</div>
+	</div>
+	<div class="form-field">
+		<label>Choose a model</label>
+		<div class="models">
 		</div>
 	</div>
 	<div class="form-field">

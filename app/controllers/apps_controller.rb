@@ -3,6 +3,33 @@ class AppsController < ApplicationController
 	def new
 	end
 
+	def list
+		obj = {}
+		obj[:status] = 'fail'
+		key_public = params['key_public']
+		if key_public.nil?
+			obj[:message] = 'key_public is needed.'
+		else
+			user = User.find_by_key_public(key_public)
+			if user.nil?
+				obj[:message] = 'Invalid key_public'
+			else
+				obj[:status] = 'success'
+				apps = user.apps.order('created_at desc')
+				unless params[:offset].nil?
+					apps = apps.offset(params[:offset].to_i)
+				end
+				unless params[:limit].nil?
+					apps = apps.limit(params[:limit].to_i)
+				end
+				obj[:apps] = apps.map{|app| app.widget}
+			end
+		end
+		respond_to do |format|
+			format.json {render :json => obj.to_json}
+		end
+	end
+
 	def create
 		obj = {}
 		obj[:status] = 'fail'

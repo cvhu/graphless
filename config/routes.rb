@@ -14,8 +14,11 @@ Graphless::Application.routes.draw do
 
   match '/apps/new' => 'apps#new'
   match '/api/apps/create' => 'apps#create'
+  match '/api/apps/list' => 'apps#list'
 
   match '/api/models/create' => 'models#create'
+  match '/api/models/list' => 'models#list'
+  match '/api/models/view' => 'models#view'
 
   match '/api/mnodes/create' => 'mnodes#create'
 
