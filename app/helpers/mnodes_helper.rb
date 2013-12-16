@@ -1,0 +1,2 @@
+module MnodesHelper
+end

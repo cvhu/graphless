@@ -7,6 +7,11 @@ class User < ActiveRecord::Base
   validates_presence_of :email
   validates_presence_of :username
 
+  has_many :apps, :dependent => :destroy
+  has_many :models, :dependent => :destroy
+  has_many :events, :dependent => :destroy
+  has_many :values, :dependent => :destroy
+
   def renewLogin
   	self.renewLoginSalt
   	self.renewKeyPublic
@@ -30,7 +35,7 @@ class User < ActiveRecord::Base
   	return "#{self.first_name.capitalize} #{self.last_name.capitalize}"
   end
 
-  def getWidgetData
+  def widget
     return {
       :username => username,
       :fullname => getFullName

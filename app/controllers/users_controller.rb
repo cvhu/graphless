@@ -77,7 +77,7 @@ class UsersController < ApplicationController
 				obj[:message] = 'Invalid username.'
 			else
 				obj[:status] = 'success'
-				obj[:user] = user.getWidgetData
+				obj[:user] = user.widget
 			end
 		end
 		respond_to do |format|
